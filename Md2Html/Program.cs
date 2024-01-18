@@ -1,4 +1,4 @@
-﻿using CommonMark;
+﻿using Md2Html;
 using System;
 using System.IO;
 using System.Linq;
@@ -21,11 +21,8 @@ class Program
             return;
         }
 
-        using var reader = new StreamReader(mdFile);
-        var stringBuilder = new StringBuilder();
-        using var writer = new StringWriter(stringBuilder);
-        CommonMarkConverter.Convert(reader, writer);
-        var content = stringBuilder.ToString();
+        var md = File.ReadAllText(mdFile);
+        var content = MarkdownUtil.RenderAsHtml(md);
 
         var template = File.ReadAllText(templateFile);
         var title = Path.GetFileNameWithoutExtension(mdFile);
